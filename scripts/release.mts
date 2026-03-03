@@ -2,7 +2,7 @@
 
 import path from 'node:path'
 import fs from 'node:fs/promises'
-import { version } from '../package.json' with { type: 'json' }
+import pkg from '../package.json' with { type: 'json' }
 
 const constantsString = await fs.readFile(
   path.resolve(import.meta.dirname, '../src/js/constants.ts'),
@@ -11,7 +11,7 @@ const constantsString = await fs.readFile(
 
 constantsString.replace(
   /export const VERSION = ['"](.*?)['"];?/g,
-  `export const VERSION = '${version}'`,
+  `export const VERSION = '${pkg.version}'`,
 )
 
 constantsString.replace(
