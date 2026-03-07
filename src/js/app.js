@@ -132,6 +132,12 @@ class App {
     $('#lbl-secret-key').textContent = t('secretAccessKey')
     $('#lbl-bucket').textContent = t('bucketName')
     $('#lbl-custom-domain').textContent = t('customDomain')
+    $('#lbl-bucket-access').textContent = t('bucketAccess')
+    const bucketAccessSelect = $('#cfg-bucket-access')
+    if (bucketAccessSelect) {
+      $('option[value="public"]', bucketAccessSelect).textContent = t('bucketAccessPublic')
+      $('option[value="private"]', bucketAccessSelect).textContent = t('bucketAccessPrivate')
+    }
 
     $('#lbl-filename-tpl').textContent = t('filenameTpl')
     $('#lbl-filename-tpl-scope').textContent = t('filenameTplScope')
@@ -184,6 +190,7 @@ class App {
     $('#help-secret-key').dataset.tooltip = t('tooltipSecretAccessKey')
     $('#help-bucket').dataset.tooltip = t('tooltipBucket')
     $('#help-custom-domain').dataset.tooltip = t('tooltipCustomDomain')
+    $('#help-bucket-access').dataset.tooltip = t('tooltipBucketAccess')
 
     $('#help-filename-tpl').dataset.tooltip = t('tooltipFilenameTpl')
     $('#help-filename-tpl-scope').dataset.tooltip = t('tooltipFilenameTplScope')
@@ -399,6 +406,7 @@ class App {
     const tplInput = /** @type {HTMLInputElement} */ ($('#cfg-filename-tpl'))
     const tplScopeInput = /** @type {HTMLSelectElement | null} */ ($('#cfg-filename-tpl-scope'))
     const domainInput = /** @type {HTMLInputElement} */ ($('#cfg-custom-domain'))
+    const bucketAccessInput = /** @type {HTMLSelectElement} */ ($('#cfg-bucket-access'))
 
     const compressModeInput = /** @type {HTMLSelectElement} */ ($('#cfg-compress-mode'))
     const compressLevelInput = /** @type {HTMLSelectElement} */ ($('#cfg-compress-level'))
@@ -419,6 +427,7 @@ class App {
     if (cfg.filenameTpl) tplInput.value = cfg.filenameTpl
     if (tplScopeInput) tplScopeInput.value = cfg.filenameTplScope || 'images'
     if (cfg.customDomain) domainInput.value = cfg.customDomain
+    if (bucketAccessInput) bucketAccessInput.value = cfg.bucketAccess || 'public'
 
     if (compressModeInput) compressModeInput.value = cfg.compressMode || 'none'
     if (compressLevelInput) compressLevelInput.value = cfg.compressLevel || 'balanced'
@@ -481,6 +490,7 @@ class App {
         filenameTpl: tplInput ? tplInput.value.trim() : '',
         filenameTplScope: tplScopeInput ? tplScopeInput.value : 'images',
         customDomain: domainInput ? domainInput.value.trim().replace(/\/+$/, '') : '',
+        bucketAccess: bucketAccessInput ? /** @type {'public' | 'private'} */ (bucketAccessInput.value) : 'public',
         compressMode: compressModeInput ? compressModeInput.value : 'none',
         compressLevel: compressLevelInput ? compressLevelInput.value : 'balanced',
         tinifyKey: tinifyKeyInput ? tinifyKeyInput.value.trim() : '',

@@ -113,7 +113,7 @@ class R2Client {
   /** @param {string} key */
   getPublicUrl(key) {
     const cfg = /** @type {ConfigManager} */ (this.#config).get()
-    if (cfg.customDomain) {
+    if (cfg.customDomain && cfg.bucketAccess !== 'private') {
       return `${cfg.customDomain}/${encodeS3Key(key)}`
     }
     return null
