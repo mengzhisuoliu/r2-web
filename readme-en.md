@@ -19,7 +19,7 @@ Follow the [CORS setup guide](#1-configure-r2-bucket-cors) below, then visit **[
 
 **Pain points with traditional solutions:**
 
-- The official Cloudflare console is basic and cumbersome to use
+- The official Cloudflare console is basic and cumbersome to use, especially for managing large numbers of files (copying, moving, renaming, etc.)
 - Third-party desktop clients require installation, painful across platforms
 - CLI tools have a steep learning curve, not suited for quick ad-hoc tasks
 - Other web tools aren't R2-focused, leaving gaps in features and experience
@@ -157,7 +157,7 @@ See [CLAUDE.md](./CLAUDE.md) for the full development guide.
 
 **Q: Are my credentials safe?**
 
-A: Credentials are stored only in your browser's localStorage and are never sent to any server. Using a read-only API token is recommended.
+A: Credentials are stored only in your browser's localStorage and are never sent to any server. It is recommended to use API tokens with permissions limited to the specific bucket and non-admin read/write access.
 
 **Q: Which browsers are supported?**
 

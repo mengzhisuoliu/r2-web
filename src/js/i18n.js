@@ -627,7 +627,8 @@ const I18N = {
     tooltipSecretAccessKey: 'R2 API Secret Key, stored locally in browser only, never uploaded',
     tooltipBucket: 'R2 Bucket Name, all file operations will be performed in this bucket',
     tooltipCustomDomain: 'Custom Domain (optional), enables one-click public URL copying for files',
-    tooltipBucketAccess: 'Declares actual bucket visibility. Public uses custom domain URL; Private always uses presigned URLs.',
+    tooltipBucketAccess:
+      'Declares actual bucket visibility. Public uses custom domain URL; Private always uses presigned URLs.',
     tooltipFilenameTpl: 'Filename template, supports placeholders for auto-generating names and folders',
     tooltipFilenameTplScope: 'Choose template scope; default is images only',
     filenameTplHintDetailed:
@@ -852,7 +853,8 @@ const I18N = {
     tooltipSecretAccessKey: 'R2 API シークレットキー、ブラウザにのみ保存され、アップロードされません',
     tooltipBucket: 'R2 バケット名、すべてのファイル操作はこのバケットで実行されます',
     tooltipCustomDomain: 'カスタムドメイン（任意）、設定後ファイルの公開 URL をワンクリックでコピーできます',
-    tooltipBucketAccess: 'バケットの実際の公開設定を宣言します。公開: カスタムドメイン URL を優先；非公開: 常にプリサインド URL を使用',
+    tooltipBucketAccess:
+      'バケットの実際の公開設定を宣言します。公開: カスタムドメイン URL を優先；非公開: 常にプリサインド URL を使用',
     tooltipFilenameTpl: 'ファイル名テンプレート、プレースホルダで名前とフォルダ構造を自動生成',
     tooltipFilenameTplScope: 'テンプレートの適用範囲を選択（既定は画像のみ）',
     filenameTplHintDetailed:
