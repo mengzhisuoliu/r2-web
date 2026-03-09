@@ -414,13 +414,16 @@ class UploadManager {
       item.id = id
       item.innerHTML = `
         <div class="upload-item-header">
-          <div class="upload-item-name" title="${displayName}">${displayName}</div>
+          <div class="upload-item-name"></div>
           <div class="upload-item-status" id="${id}-status"></div>
         </div>
         <div class="upload-progress">
           <div class="upload-progress-bar" id="${id}-bar"></div>
         </div>
       `
+      const nameEl = /** @type {HTMLElement} */ (item.querySelector('.upload-item-name'))
+      nameEl.textContent = displayName
+      nameEl.setAttribute('title', displayName)
       body.appendChild(item)
 
       const updateStatus = /** @param {string} msg */ (msg) => {
