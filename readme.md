@@ -24,7 +24,9 @@
 | Netlify          | [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)][netlify-deploy]      |
 | Cloudflare Pages | [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)][cloudflare-deploy] |
 
-其他服务只需部署 `src` 目录即可，部署后记得更新 CORS 规则，允许你的域名访问 R2 API。
+> 如果用得不错，别忘了点个免费的小星星 ✨，对这个项目很重要，非常感谢～
+
+其他服务只需部署 `src` 目录即可，部署后记得更新 CORS 规则允许你的域名访问 R2 API。
 
 ## 反馈途径
 
