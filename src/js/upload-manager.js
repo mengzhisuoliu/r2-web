@@ -104,7 +104,7 @@ async function compressFile(file, config, onStatus) {
     if (config.compressMode === 'tinify') {
       if (!config.tinifyKey) return file
 
-      onStatus && onStatus('Cloud 压缩中...')
+      onStatus && onStatus('云端压缩中...')
 
       const apiUrl = new URL('https://api.tinify.com/shrink')
       apiUrl.searchParams.set('proxy-host', 'api.tinify.com')
@@ -280,7 +280,7 @@ class UploadManager {
         e.preventDefault()
         const allImages = files.every((f) => f.type.startsWith('image/'))
         if (allImages) {
-          this.#ui.toast(t('pasteToUpload', { count: files.length }), 'info')
+          this.#ui.toast(t('pasteToUpload', { count: files.length }), 'success')
           this.uploadFiles(files)
           return
         }
@@ -308,8 +308,8 @@ class UploadManager {
       if (hasText) {
         e.preventDefault()
         let content = plainText
-        if (!content.trim() && hasHtml) {
-          const doc = new DOMParser().parseFromString(htmlText, 'text/html')
+        if (!content.trim() && htmlTextContent) {
+          const doc = new DOMParser().parseFromString(htmlTextContent, 'text/html')
           content = doc.body?.textContent || ''
         }
         content = content.trim()
