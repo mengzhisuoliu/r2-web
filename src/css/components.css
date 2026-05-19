@@ -1432,7 +1432,7 @@
 
   /* Paste hint — absolute positioning within file-browser container */
   .paste-hint {
-    position: absolute;
+    position: fixed;
     bottom: var(--sp-8);
     left: 50%;
     transform: translateX(-50%);

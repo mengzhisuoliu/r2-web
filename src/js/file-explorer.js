@@ -48,7 +48,7 @@ class FileExplorer {
           }
         }
       },
-      { rootMargin: '100px' },
+      { rootMargin: '120px' },
     )
   }
 
@@ -165,59 +165,55 @@ class FileExplorer {
     $('#load-more').hidden = true
     $('#item-count').hidden = true
     this.#updateBreadcrumb()
-    await this.#loadPage(true)
+    await this.#loadAllPages(true)
   }
 
   async loadMore() {
     if (!this.#continuationToken) return
-    await this.#loadPage(false)
+    await this.#loadAllPages(false)
   }
 
   /** @param {boolean} isInitial @param {boolean} [bypassCache] */
-  async #loadPage(isInitial, bypassCache = false) {
+  async #loadAllPages(isInitial, bypassCache = false) {
     const gen = this.#loadGen
     if (isInitial) this.#ui.showSkeleton()
     try {
-      const cacheKey = `${this.#prefix}::${this.#continuationToken}`
-      const cached = this.#cache.get(cacheKey)
-      let result
+      do {
+        const cacheKey = `${this.#prefix}::${this.#continuationToken}`
+        const cached = this.#cache.get(cacheKey)
+        let result
 
-      if (!bypassCache && cached && Date.now() - cached.ts < CACHE_TTL) {
-        result = cached.data
-      } else {
-        result = await this.#r2.listObjects(this.#prefix, this.#continuationToken)
-        this.#cache.set(cacheKey, { data: result, ts: Date.now() })
-      }
+        if (!bypassCache && cached && Date.now() - cached.ts < CACHE_TTL) {
+          result = cached.data
+        } else {
+          result = await this.#r2.listObjects(this.#prefix, this.#continuationToken)
+          this.#cache.set(cacheKey, { data: result, ts: Date.now() })
+        }
+
+        if (gen !== this.#loadGen) return
+
+        this.#continuationToken = result.isTruncated ? result.nextToken : ''
+        this.#loadedItems.push(...result.folders, ...result.files)
+      } while (this.#continuationToken)
 
       if (gen !== this.#loadGen) return
 
-      this.#continuationToken = result.isTruncated ? result.nextToken : ''
-
       if (isInitial) this.#ui.hideSkeleton()
 
-      const items = [...result.folders, ...result.files]
-      this.#loadedItems.push(...items)
-
-      if (isInitial) {
-        const sortedItems = this.#sortItems(this.#loadedItems)
-        if (sortedItems.length === 0) {
-          this.#ui.showEmptyState()
-        } else {
-          this.#ui.hideEmptyState()
-          this.#renderItems(sortedItems)
-        }
+      const sorted = this.#sortItems(this.#loadedItems)
+      if (sorted.length === 0) {
+        this.#ui.showEmptyState()
       } else {
         this.#ui.hideEmptyState()
         $('#file-grid').innerHTML = ''
-        this.#renderItems(this.#sortItems(this.#loadedItems))
+        this.#renderItems(sorted)
+        this.#restoreSelectionUI()
       }
 
       const countEl = $('#item-count')
-      countEl.textContent = result.isTruncated
-        ? t('itemsPartial', { count: this.#loadedItems.length })
-        : t('itemsTotal', { count: this.#loadedItems.length })
+      countEl.textContent = t('itemsTotal', { count: this.#loadedItems.length })
       countEl.hidden = this.#loadedItems.length === 0
-      $('#load-more').hidden = !result.isTruncated
+      $('#load-more').hidden = true
     } catch (/** @type {any} */ err) {
       if (isInitial) this.#ui.hideSkeleton()
 
@@ -403,7 +399,7 @@ class FileExplorer {
     this.#loadGen++
     $('#file-grid').innerHTML = ''
     this.#updateBreadcrumb()
-    await this.#loadPage(true, true)
+    await this.#loadAllPages(true, true)
   }
 }
 
