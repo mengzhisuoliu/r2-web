@@ -108,7 +108,7 @@ async function compressFile(file, config, onStatus) {
 
       const apiUrl = new URL('https://api.tinify.com/shrink')
       apiUrl.searchParams.set('proxy-host', 'api.tinify.com')
-      apiUrl.host = 'proxy.viki.moe'
+      apiUrl.host = 'proxy.nioi.in'
 
       const response = await fetch(apiUrl.toString(), {
         method: 'POST',
@@ -123,7 +123,7 @@ async function compressFile(file, config, onStatus) {
       const data = await response.json()
       const url = new URL(data.output.url)
       url.searchParams.set('proxy-host', 'api.tinify.com')
-      url.host = 'proxy.viki.moe'
+      url.host = 'proxy.nioi.in'
 
       const compressedRes = await fetch(url.toString())
       const compressedBlob = await compressedRes.blob()
